@@ -1,0 +1,19 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+        MinWidth="500" Width="500" MaxWidth="500" MinHeight="150" Height="150" MaxHeight="150" CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        x:Class="Hypernex.Launcher.AuthWindow"
+        Icon="/Assets/hypernex_logo.ico"
+        Title="AuthWindow">
+    <Canvas>
+        <Label Canvas.Left="5" Canvas.Top="10" FontSize="26" FontWeight="Bold">Login Required</Label>
+        <TextBox Canvas.Left="5" Canvas.Top="45" Width="490" Watermark="Username"></TextBox>
+        <TextBox Canvas.Left="5" Canvas.Top="80" Width="490" Watermark="Password" PasswordChar="*"></TextBox>
+        <Button Canvas.Left="5" Canvas.Top="115" Width="490" Click="OnLoginClicked">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center">Submit</TextBlock>
+        </Button>
+    </Canvas>
+</Window>

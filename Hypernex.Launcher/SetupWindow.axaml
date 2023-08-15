@@ -1,0 +1,23 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+        MinWidth="500" Width="500" MaxWidth="500" MinHeight="255" Height="255" MaxHeight="255" CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        x:Class="Hypernex.Launcher.SetupWindow"
+        Icon="/Assets/hypernex_logo.ico"
+        Title="SetupWindow">
+    <Canvas>
+        <Label Canvas.Left="5" Canvas.Top="10" FontSize="26" FontWeight="Bold">TargetDomain</Label>
+        <Label Canvas.Left="5" Canvas.Top="45">The domain to use for Hypernex. (Exclude any protocols like https://)</Label>
+        <TextBox Canvas.Left="5" Canvas.Top="80" Width="490">play.hypernex.dev</TextBox>
+        <Label Canvas.Left="5" Canvas.Top="115" FontSize="26" FontWeight="Bold">InstallLocation</Label>
+        <Label Canvas.Left="5" Canvas.Top="150">The Location to install Hypernex.Unity to.</Label>
+        <TextBox Canvas.Left="5" Canvas.Top="185" Width="350"></TextBox>
+        <Button Canvas.Right="5" Canvas.Top="185" Click="SelectDirectoryPressed">Select Directory</Button>
+        <Button Canvas.Left="5" Canvas.Top="220" Width="490" HorizontalAlignment="Center" Click="SubmitPressed">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center">Submit</TextBlock>
+        </Button>
+    </Canvas>
+</Window>
