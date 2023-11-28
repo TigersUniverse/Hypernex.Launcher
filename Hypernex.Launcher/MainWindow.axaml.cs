@@ -46,8 +46,10 @@ public partial class MainWindow : Window
                 Launch(launcherCache);
             };
         }
-        Opened += (sender, args) =>
+        Opened += async (sender, args) =>
         {
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                try{ await ProtocolHandler.Register(this); } catch(Exception){ }
             if (Uninstall && !IsFirstOpen)
             {
                 ActionText.Text = "Uninstalling";
