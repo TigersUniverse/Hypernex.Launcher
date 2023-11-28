@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Versioning;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -102,7 +101,7 @@ public static class ProtocolHandler
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = pathToHypernex,
-                    WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    WorkingDirectory = Path.GetDirectoryName(AppContext.BaseDirectory),
                     UseShellExecute = true,
                     Verb = "runas"
                 };
