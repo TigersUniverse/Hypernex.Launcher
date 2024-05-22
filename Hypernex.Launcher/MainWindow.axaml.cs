@@ -108,43 +108,22 @@ public partial class MainWindow : Window
     {
         try
         {
-            Installer.Install((didDownload, executableToLaunch) => Dispatcher.UIThread.InvokeAsync(() =>
+            if(GetArgs().Contains("--no-github"))
             {
-                ActionText.Text = "Launching";
-                ProgressBar.Value = 100;
-                new Thread(() =>
-                {
-                    ProcessStartInfo processStartInfo = new()
-                    {
-                        FileName = Path.GetFileName(executableToLaunch),
-                        WorkingDirectory = Path.GetDirectoryName(executableToLaunch),
-                        UseShellExecute = true,
-                        Arguments = GetArgs()
-                    };
-                    if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    {
-                        // Make sure the file is executable first
-                        Process chmodProcess = new Process
-                        {
-                            StartInfo = new ProcessStartInfo("chmod", $"+x {executableToLaunch}")
-                            {
-                                CreateNoWindow = true
-                            },
-                            EnableRaisingEvents = true
-                        };
-                        chmodProcess.Exited += (sender, args) => { Process.Start(processStartInfo); };
-                        chmodProcess.Start();
-                    }
-                    else
-                        Process.Start(processStartInfo);
-                    Thread.Sleep(3000);
-                    Environment.Exit(0);
-                }).Start();
-            }), (text, progress) => Dispatcher.UIThread.InvokeAsync(() =>
+                Installer.Install(
+                    (didDownload, executableToLaunch) =>
+                        Dispatcher.UIThread.InvokeAsync(() => OnInstall(didDownload, executableToLaunch)),
+                    (text, progress) => Dispatcher.UIThread.InvokeAsync(() => OnProgress(text, progress)),
+                    launcherCache);
+            }
+            else
             {
-                ActionText.Text = text;
-                ProgressBar.Value = progress;
-            }), launcherCache);
+                Installer.InstallGithub(
+                    (didDownload, executableToLaunch) =>
+                        Dispatcher.UIThread.InvokeAsync(() => OnInstall(didDownload, executableToLaunch)),
+                    (text, progress) => Dispatcher.UIThread.InvokeAsync(() => OnProgress(text, progress)),
+                    launcherCache);
+            }
         }
         catch (Exception e)
         {
@@ -159,5 +138,45 @@ public partial class MainWindow : Window
             }).Show(this);
             Environment.Exit(0);
         }
+    }
+
+    private void OnProgress(string text, int progress)
+    {
+        ActionText.Text = text;
+        ProgressBar.Value = progress;
+    }
+
+    private void OnInstall(bool didDownload, string executableToLaunch)
+    {
+        ActionText.Text = "Launching";
+        ProgressBar.Value = 100;
+        new Thread(() =>
+        {
+            ProcessStartInfo processStartInfo = new()
+            {
+                FileName = Path.GetFileName(executableToLaunch),
+                WorkingDirectory = Path.GetDirectoryName(executableToLaunch),
+                UseShellExecute = true,
+                Arguments = GetArgs()
+            };
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Make sure the file is executable first
+                Process chmodProcess = new Process
+                {
+                    StartInfo = new ProcessStartInfo("chmod", $"+x {executableToLaunch}")
+                    {
+                        CreateNoWindow = true
+                    },
+                    EnableRaisingEvents = true
+                };
+                chmodProcess.Exited += (sender, args) => { Process.Start(processStartInfo); };
+                chmodProcess.Start();
+            }
+            else
+                Process.Start(processStartInfo);
+            Thread.Sleep(3000);
+            Environment.Exit(0);
+        }).Start();
     }
 }

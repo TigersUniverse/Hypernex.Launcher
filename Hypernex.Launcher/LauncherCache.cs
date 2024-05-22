@@ -12,6 +12,15 @@ public class LauncherCache
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Hypernex.Launcher");
 
     private static string ConfigLocation => Path.Combine(CacheDirectory, "launcher.cfg");
+
+    public static void DeleteFile(string fileName)
+    {
+        if (!Directory.Exists(CacheDirectory))
+            Directory.CreateDirectory(CacheDirectory);
+        string path = Path.Combine(CacheDirectory, fileName);
+        if(!File.Exists(path)) return;
+        File.Delete(path);
+    }
     
     public static string SaveFile(byte[] data, string fileName)
     {
@@ -24,6 +33,8 @@ public class LauncherCache
         fs.Dispose();
         return file;
     }
+
+    public static string GetFileSave(string fileName) => Path.Combine(CacheDirectory, fileName);
 
     public static LauncherCache Create()
     {
