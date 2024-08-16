@@ -21,7 +21,8 @@ public static class Installer
         {
             "StreamingAssets"
         }),
-        ("MonoBleedingEdge", true, null)
+        ("MonoBleedingEdge", true, null),
+        ("D3D12", true, null)
     };
 
     private static string[] UnityFiles =
