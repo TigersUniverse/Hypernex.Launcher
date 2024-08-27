@@ -17,14 +17,11 @@ public static class Installer
     
     private static (string, bool, string[]?)[] UnityDirectories =
     {
-        ("Hypernex_Data", false, new[]
-        {
-            "StreamingAssets"
-        }),
         ("Hypernex.Unity_Data", false, new[]
         {
             "StreamingAssets"
         }),
+        ("Hypernex_Data", true, null),
         ("MonoBleedingEdge", true, null),
         ("D3D12", true, null)
     };
@@ -297,8 +294,9 @@ public static class Installer
         }
         foreach (string unityFile in UnityFiles)
         {
-            if(File.Exists(unityFile))
-                File.Delete(unityFile);
+            string tFile = Path.Combine(installDirectory, unityFile);
+            if(File.Exists(tFile))
+                File.Delete(tFile);
         }
     }
 
