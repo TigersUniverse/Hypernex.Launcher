@@ -21,6 +21,10 @@ public static class Installer
         {
             "StreamingAssets"
         }),
+        ("Hypernex.Unity_Data", false, new[]
+        {
+            "StreamingAssets"
+        }),
         ("MonoBleedingEdge", true, null),
         ("D3D12", true, null)
     };
@@ -28,11 +32,13 @@ public static class Installer
     private static string[] UnityFiles =
     {
         "Hypernex.exe",
+        "Hypernex.Unity.exe",
         "UnityCrashHandler64.exe",
         "UnityPlayer.dll",
         "xr.bat",
         // Linux
         "Hypernex.x86_64",
+        "Hypernex.Unity.x86_64",
         "UnityPlayer.so"
     };
 
@@ -300,7 +306,8 @@ public static class Installer
     {
         foreach (string file in Directory.GetFiles(installLocation))
         {
-            if (Path.GetFileNameWithoutExtension(file).ToLower() == "hypernex")
+            string fileName = Path.GetFileNameWithoutExtension(file).ToLower();
+            if (fileName is "hypernex" or "hypernex.unity")
                 return file;
         }
         throw new Exception("No executable!");
